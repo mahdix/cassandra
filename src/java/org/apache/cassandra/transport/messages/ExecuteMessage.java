@@ -133,7 +133,6 @@ public class ExecuteMessage extends Message.Request
                     builder.put("bound_var_" + Integer.toString(i+1) + "_" + boundName, boundValue);
                 }
 
-                // TODO we don't have [typed] access to CQL bind variables here.  CASSANDRA-4560 is open to add support.
                 Tracing.instance.begin("Execute CQL3 prepared query", state.getClientAddress(), builder.build());
             }
 
