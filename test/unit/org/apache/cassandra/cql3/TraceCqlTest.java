@@ -46,6 +46,15 @@ public class TraceCqlTest extends CQLTester
                                              .enableTracing();
             QueryTrace trace = session.execute(pstmt.bind(1)).getExecutionInfo().getQueryTrace();
             assertEquals(cql, trace.getParameters().get("query"));
+            assertEquals("1", trace.getParameters().get("bound_var_1_id"));
+
+            String cql2 = "SELECT id, v1, v2 FROM " + KEYSPACE + '.' + currentTable() + " WHERE id IN (?, ?, ?)";
+            pstmt = session.prepare(cql2).enableTracing();
+            trace = session.execute(pstmt.bind(19, 15, 16)).getExecutionInfo().getQueryTrace();
+            assertEquals(cql2, trace.getParameters().get("query"));
+            assertEquals("19", trace.getParameters().get("bound_var_1_id"));
+            assertEquals("15", trace.getParameters().get("bound_var_2_id"));
+            assertEquals("16", trace.getParameters().get("bound_var_3_id"));
         }
     }
 }
