@@ -48,6 +48,9 @@ Function Main
         $scriptDir = Split-Path $script:MyInvocation.MyCommand.Path
         $env:CASSANDRA_HOME = (Get-Item $scriptDir).parent.FullName
     }
+
+    #we create directory for log files here instead of cassandra-env due to issues with deb packaging scripts
+    New-Item -Force -ItemType directory -Path $env:CASSANDRA_HOME/logs/
     . "$env:CASSANDRA_HOME\bin\source-conf.ps1"
 
     $conf = Find-Conf

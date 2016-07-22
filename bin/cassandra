@@ -121,6 +121,8 @@ if [ -z "$CASSANDRA_CONF" -o -z "$CLASSPATH" ]; then
 fi
 
 if [ -f "$CASSANDRA_CONF/cassandra-env.sh" ]; then
+    #we create directory for log files here instead of cassandra-env due to issues with deb packaging scripts
+    mkdir -p ${CASSANDRA_HOME}/logs/
     . "$CASSANDRA_CONF/cassandra-env.sh"
 fi
 
