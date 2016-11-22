@@ -226,6 +226,7 @@ public class BigTableReader extends SSTableReader
                     if (v < 0)
                     {
                         Tracing.trace("Partition index lookup allows skipping sstable {}", descriptor.generation);
+                        bloomFilterTracker.addFalsePositive();
                         return null;
                     }
                 }
